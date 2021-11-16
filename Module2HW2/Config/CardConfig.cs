@@ -5,6 +5,6 @@
     /// </summary>
     public class CardConfig
     {
-        public int Size => 5;
+        public int Size { get; set; }
     }
 }

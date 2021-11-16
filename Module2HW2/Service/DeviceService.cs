@@ -4,17 +4,17 @@ namespace Module2HW2.Service
 {
    public class DeviceService
     {
-        private Store _store;
+        private DeviceProvider _deviceprovider;
         private Device[] _device;
 
         public DeviceService()
         {
-            _store = new Store();
+            _deviceprovider = new DeviceProvider();
         }
 
         public Device[] AllDevices()
         {
-            _device = _store.ListDevices();
+            _device = _deviceprovider.ListDevices();
             return _device;
         }
     }

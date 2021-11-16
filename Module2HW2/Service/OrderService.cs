@@ -1,20 +1,39 @@
 ﻿using System;
+using Module2HW2.Config;
 using Module2HW2.Model;
+using Module2HW2.Provider;
 
 namespace Module2HW2.Service
 {
     public class OrderService
     {
-        public void OrderInfo(User user)
+        private DeviceProvider _deviceprovider;
+        private Device[] _device;
+        private CartService _cartService;
+        private CardConfig _cardConfig;
+
+        public OrderService()
         {
-            Console.WriteLine("---Order in progress---");
-            Console.WriteLine($"Dear {user.Name} ,your order is accepted.Your confirmation will be sent {user.Email}");
+            _deviceprovider = new DeviceProvider();
+            _device = _deviceprovider.ListDevices();
+            _cartService = CartService.Instance;
+            _cardConfig = new CardConfig() { Size = 5 };
         }
 
-        public void OrderFinish(User user)
+        public void AddDevices()
         {
-            Console.WriteLine("---Order delivered---");
-            Console.WriteLine($"{user.Name},buy from us again");
+            for (int i = 0; i < _cardConfig.Size; i++)
+            {
+                var rand = new Random();
+                var item = _device[rand.Next(0, _device.Length)];
+                _cartService.AddBasketItem(item);
+            }
+        }
+
+        public Device[] DeviceOrder()
+        {
+            var result = _cartService.GetProducts();
+            return result;
         }
     }
 }
